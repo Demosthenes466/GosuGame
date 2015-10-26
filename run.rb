@@ -1,6 +1,7 @@
 require_relative "player"
 require_relative "star"
 require_relative "bomb"
+require_relative "laser"
 require 'gosu'
 
 class GameWindow < Gosu::Window
@@ -20,6 +21,8 @@ class GameWindow < Gosu::Window
 
 		@bombs = Array.new
 
+		@laser = Laser.new
+
 
 	end
 
@@ -33,6 +36,10 @@ class GameWindow < Gosu::Window
 		if Gosu::button_down? Gosu::KbUp or Gosu::button_down? Gosu::GpButton0 then
 			@player.accelerate
 		end
+		if Gosu::button_down? Gosu::KbSpace then
+			@laser.draw
+		end
+
 		@player.move
 		@player.collect_stars(@stars)
 		@player.collides(@bombs)

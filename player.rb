@@ -9,6 +9,7 @@ class Player
 		@image = Gosu::Image.new("starfighter.png")
 		@beep = Gosu::Sample.new("beep.wav")
 		@explosion = Gosu::Sample.new("wilhelm.wav")
+		# @laser = Gosu::Sample.new("laser.wav")
 		@x = @y = @vel_x = @vel_y = @angle = 0.0
 		@score = 0
 	end
@@ -70,5 +71,6 @@ class Player
 			false
 		end
 	end
+
 
 end
