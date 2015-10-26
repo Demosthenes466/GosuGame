@@ -4,7 +4,7 @@ class SuperStar < Star
 
 	def initilialize(animation)
 		super(animation)
-		self.zoomLevel = 2
+		self.zoomLevel = 4
 		c = Gosu::Color.new(0xff_000000)
 		c.red = 256
 		c.green = 0
