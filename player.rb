@@ -1,9 +1,10 @@
 require_relative "star"
+require_relative "base_shot"
 require_relative "bomb"
 require "gosu"
 
 class Player
-	attr_reader :score
+	attr_reader :score, :timer
 
 	def initialize
 		@image = Gosu::Image.new("starfighter.png")
@@ -11,10 +12,11 @@ class Player
 		@explosion = Gosu::Sample.new("wilhelm.wav")
 		@x = @y = @vel_x = @vel_y = @angle = 0.0
 		@score = 0
+		@timer = 1
 	end
 
 	def warp(x,y)
-		@x, @y = x,y
+		@x, @y = x, y
 	end
 
 	def turn_left
@@ -28,6 +30,18 @@ class Player
 	def accelerate
 		@vel_x += Gosu::offset_x(@angle,0.5)
 		@vel_y += Gosu::offset_y(@angle,0.5)
+	end
+
+	def x_pos
+		@x
+	end
+
+	def y_pos
+		@y
+	end
+
+	def angle
+		@angle
 	end
 
 	def move
@@ -48,6 +62,18 @@ class Player
 		@score
 	end
 
+	def timer?
+		if @timer < 0
+			@timer == 0
+			false
+		else
+			@timer = 10000 - Gosu::milliseconds
+		end
+		# if @timer == 0
+		# 	@timer = 0
+		# end
+	end
+
 	def collect_stars(stars)
 		if stars.reject! {|star| Gosu::distance(@x, @y, star.x, star.y) < 35 } then
 			@score += 1
@@ -65,6 +91,16 @@ class Player
 		if bombs.reject! {|bomb| Gosu::distance(@x, @y, bomb.x, bomb.y) < 50 } then
 			@score -= 10
 			@explosion.play
+			true
+		else
+			false
+		end
+	end
+
+	def collides_laser(bombs)
+		if bombs.reject! {|laser| Gosu::distance(@x, @y, laser.x, laser.y) < 50 } then
+			# @score -= 10
+			# @explosion.play
 			true
 		else
 			false
