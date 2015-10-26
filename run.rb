@@ -2,6 +2,7 @@ require_relative "player"
 require_relative "star"
 require_relative "bomb"
 require_relative "base_shot"
+require_relative "superstar"
 require 'gosu'
 
 class GameWindow < Gosu::Window
@@ -47,6 +48,10 @@ class GameWindow < Gosu::Window
 
 		if rand(100) < 4 and @stars.size < 25 then
 			@stars.push(Star.new(@star_anim))
+		end
+
+		if rand(100) < 4 and @stars.size < 25 then
+			@stars.push(SuperStar.new(@star_anim))
 		end
 
 		if rand(100) < 3 and @bombs.size < 5 then
